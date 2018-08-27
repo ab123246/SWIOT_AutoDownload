@@ -108,26 +108,6 @@ int getstringlength(char *s){
 	return num1;
 }
 
-void doumean(){
-	bool done;
-	char cr[99];
-	char cr1[10]="是不是要查";
-	system("adb shell uiautomator dump");
-	system("adb pull /sdcard/window_dump.xml ./filename.xml");
-	FILE *fp;
-	fp = fopen("filename.xml", "r");
-	while(1){
-		done = true;
-		fgets(cr,99,fp);
-		for(int loopnum1 = 0;loopnum1 < getstringlength(cr1);loopnum1++){
-			if(cr[loopnum1] != cr1[loopnum1]){
-				done = false;
-				break;
-			}
-		}
-	}
-}
-
 int main(){
 	char cr[99];
 	char cr1[5]="END;";
