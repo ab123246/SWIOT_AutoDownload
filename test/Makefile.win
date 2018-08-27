@@ -1,0 +1,41 @@
+# Project: Project1
+# Makefile created by Dev-C++ 5.4.2
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+OBJ      = main.o tinystr.o tinyxml.o tinyxmlerror.o tinyxmlparser.o
+LINKOBJ  = main.o tinystr.o tinyxml.o tinyxmlerror.o tinyxmlparser.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include"
+BIN      = Project1.exe
+CXXFLAGS = $(CXXINCS) -fpermissive -g3
+CFLAGS   = $(INCS) -fpermissive -g3
+RM       = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+tinystr.o: tinystr.cpp
+	$(CPP) -c tinystr.cpp -o tinystr.o $(CXXFLAGS)
+
+tinyxml.o: tinyxml.cpp
+	$(CPP) -c tinyxml.cpp -o tinyxml.o $(CXXFLAGS)
+
+tinyxmlerror.o: tinyxmlerror.cpp
+	$(CPP) -c tinyxmlerror.cpp -o tinyxmlerror.o $(CXXFLAGS)
+
+tinyxmlparser.o: tinyxmlparser.cpp
+	$(CPP) -c tinyxmlparser.cpp -o tinyxmlparser.o $(CXXFLAGS)
