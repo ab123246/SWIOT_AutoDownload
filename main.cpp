@@ -5,13 +5,16 @@
 #include"codecvt_char.h"
 
 using namespace std;
+
 int get_caseAd (char* st){
-	FILE *fp;
+FILE *fp;
+	
 	//若無此檔 c:\\test1.txt , 畫面會一閃而過(沒顯示訊息) 
 	if((fp=fopen( st , "r")) == NULL){
 		printf("此程式找不到檔案，請找程式設計者詢問\t");
 		return 0;
 	}
+	bool checkboxoff=false;
 	bool go_on = false;
 	char ch;
 	//string check_text = "";
@@ -36,7 +39,7 @@ int get_caseAd (char* st){
     				while(!(strcmp(check_text_char,"</node") == 0)){
     					//check_text = "";
     					check_text_char_index = 0;
-						check_text_char[check_text_char_index] = '\0';
+    					check_text_char[check_text_char_index] = '\0';
     					
     					//string get_check_text = "";
     					char get_check_text_char[100000];
@@ -67,11 +70,16 @@ int get_caseAd (char* st){
 							strcat(buffer,codecvtc.UTF8ToBIG5(get_check_text_char));
 							get_check_text_char[0] = '\0';
 							strcat(get_check_text_char,buffer);
-		    				if(strlen(check_text_char) <= 9)
-		    					printf("程式抓到參數: %s\t\t索引值: %s\n",check_text_char,get_check_text_char);
-		    				else
-		    					printf("程式抓到參數: %s\t索引值: %s\n",check_text_char,get_check_text_char);
-							//cout << "程式抓到參數: " << check_text << "\t索引值: " << get_check_text << endl; 
+							if(strcmp(check_text_char,"com.android.vending:id/wifi_checkbox") == 0){
+								system("adb shell input tap 156 1074");
+								checkboxoff = true;
+							}
+							if(checkboxoff){
+								if(strcmp(get_check_text_char,"繼續"))
+									return 2;
+								else if(strcmp(get_check_text_char,"com.android.vending:id/continue_button"))
+									return 3;
+							}
 		    			}
     				}
     			}
@@ -80,7 +88,6 @@ int get_caseAd (char* st){
 	}
 	fclose(fp);  //關檔 
 }
-
 
 int get_node(char* st){
 	string str1 = "";
